@@ -34,7 +34,8 @@ router.post('/livro/inserir', (req,res)=>{
                 messageStatus:error,
         });
     });
-})
+
+});
 
 /* ROTA DE SELEÇÃO DE AUTOR(GET)*/
 router.get('/livro/selecionar', (req,res)=>{
@@ -63,7 +64,8 @@ router.get('/livro/selecionar/:id', (req,res)=>{
         (livro)=>{
             res.json(livro);
         }
-    ).catch(
+    )
+    .catch(
         (error)=>{
             return res.status(500).json({
                 errorStatus:true,
@@ -96,14 +98,60 @@ router.get('/livro/selecionar/:titulo', (req,res)=>{
 
 /* ROTA DE ALTERAÇÃO DE AUTOR(PUT)*/
 router.put('/livro/alterar', (req,res)=>{
-    res.send('ROTA DE CATEGORIA DE ALTERAÇÃO!');
 
+    let {titulo, preco, imagem_grd, imagem_peq, detalhes, tblCategoriumId, id} = req.body;
+
+    livroModel.update(
+        {
+            titulo,
+            preco,
+            imagem_peq,
+            imagem_grd,
+            detalhes,
+            tblCategoriumId
+        },
+        {
+            where:{id}
+        }
+    ).then(
+        ()=>{
+            return res.status(201).json({
+                errorStatus:false,
+                messageStatus:'LIVRO ALTERADO COM SUCESSO!'
+            });
+        }
+    )
+    .catch(
+        (error)=>{
+            return res.status(500).json({
+                errorStatus:true,
+                messageStatus:error,
+        });
+    });
 })
 
 /* ROTA DE EXCLUSÃO DE AUTOR(DELETE)*/
-router.delete('/livro/excluir', (req,res)=>{
-    res.send('ROTA DE CATEGORIA DE DELETE!');
+router.delete('/livro/excluir/:id', (req,res)=>{
 
+    let {id} = req.params;
+
+    livroModel.destroy(
+        {where:{id}}
+    ).then(
+        ()=>{
+            return res.status(200).json({
+                errorStatus:false,
+                mensageStatus:'LIVRO EXCLUIDO COM SUCESSO'
+            });
+        }
+    ).catch(
+        (error)=>{
+            return res.status(500).json({
+                errorStatus:true,
+                mensageStatus: error
+            });
+        }
+    );
 })
 
 module.exports = router;
