@@ -18,6 +18,7 @@ app.use('/', categoriaController);
 const livroController = require('./controller/livroController');
 app.use('/', livroController);
 
+
 /*
 TESTE DE ROTA HTTP GET
 2 PARAMETROS:

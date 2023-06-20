@@ -35,10 +35,10 @@ const livro = connection.define(
 );
 
 
-//A CHAVE PRIMARIA (1) DE CATEGORIA VIRA UMA CHAVE ESTRANGEIRA (N) EM LIVRO
+/*A CHAVE PRIMARIA (1) DE CATEGORIA VIRA UMA CHAVE ESTRANGEIRA (N) EM LIVRO*/
 categoria.hasMany(livro);
 
-//A CHAVE ESTRANGEIRA DE LIVRO (N) É A CHAVE PRIMARIA DE CATEGORIA (1) 
+/*A CHAVE ESTRANGEIRA DE LIVRO (N) É A CHAVE PRIMARIA DE CATEGORIA (1)*/
 livro.belongsTo(categoria);
 
 //livro.sync({force:false});

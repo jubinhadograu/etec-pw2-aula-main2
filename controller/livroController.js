@@ -1,14 +1,17 @@
 const express = require('express');
 const livroModel = require('../model/livroModel');
+const upload = require('../helpers/upload/upload');
 
 /* GERENCIADOR DE ROTAS*/
 const router = express.Router();
 
 
 /* ROTA DE INSERÇÃO DE AUTOR(POST)*/
-router.post('/livro/inserir', (req,res)=>{
+router.post('/livro/inserir', upload.array('imagens', 2), (req,res)=>{
 
-    let {titulo, preco, imagem_peq, imagem_grd, detalhes, tblCategoriumId} = req.body;
+    let {titulo, preco, detalhes, tblCategoriumId} = req.body;
+    let imagem_peq = req.files[0].patch;
+    let imagem_grd = req.files[1].patch;
 
     livroModel.create(
         {
